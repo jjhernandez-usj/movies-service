@@ -19,7 +19,7 @@ const val SONGS_PATH = "/songs"
 class AcceptanceTests : BaseTest(TestProperties.local()) {
 
     @Test
-    fun `add singer without id returns actor with maximum id`() {
+    fun `add singer without id returns singer with maximum id`() {
         val items = SINGERS_PATH.GET<SingerDTO>(jsonMapper())
         val size = items.count()
         val item = SingerDTO(0, "Juanjo")
@@ -29,7 +29,7 @@ class AcceptanceTests : BaseTest(TestProperties.local()) {
     }
 
     @Test
-    fun `edit singer returns actor properly`() {
+    fun `edit singer returns singer properly`() {
         val item = SingerDTO(0, "Juanjo${Math.random()}")
         val created = SINGERS_PATH.POST<SingerDTO>(item)
         created.name = "Juanjo${Math.random()}"

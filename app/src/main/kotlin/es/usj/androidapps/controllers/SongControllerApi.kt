@@ -39,9 +39,9 @@ interface SongControllerApi {
     fun create(@RequestBody @Valid body: SongDTO): ResponseEntity<SongDTO>
 
     @ApiOperation(
-        value = "Updates a new song.",
+        value = "Updates a song.",
         nickname = "updateSong",
-        notes = "Updates a new song.",
+        notes = "Updates a song.",
         response = CountDTO::class
     )
     @ApiResponses(
