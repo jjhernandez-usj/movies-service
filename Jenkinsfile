@@ -1,11 +1,11 @@
 def account           = '411794735725'
 def cluster_name      = 'android'
-def service_name      = "movies"
+def service_name      = "songs"
 def branch            = 'master'
 def region            = 'eu-west-1'
 def role              = 'JenkinsRole'
 
-def github_repository = 'https://github.com/jjhernandez-usj/movies-service'
+def github_repository = 'https://github.com/jjhernandez-usj/songs-service'
 def git_credentials   = 'github-multibranch'
 
 if(destination_environment == 'prod' ) {
@@ -14,9 +14,9 @@ if(destination_environment == 'prod' ) {
 
 cluster = "android-dev"
 namespace = "android-dev"
-service = "movies-dev-service"
-docker_image_name = "movies"
-task = "movies-dev-task"
+service = "songs-dev-service"
+docker_image_name = "songs"
+task = "songs-dev-task"
 
 def ecr_registry_url  = "${account}.dkr.ecr.${region}.amazonaws.com"
 

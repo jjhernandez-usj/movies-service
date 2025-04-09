@@ -1,25 +1,25 @@
 package es.usj.androidapps.utils
 
-import es.usj.androidapps.model.Actor
+import es.usj.androidapps.model.Singer
 import es.usj.androidapps.model.Genre
-import es.usj.androidapps.model.Movie
-import es.usj.androidapps.model.dto.ActorDTO
+import es.usj.androidapps.model.Song
+import es.usj.androidapps.model.dto.SingerDTO
 import es.usj.androidapps.model.dto.GenreDTO
-import es.usj.androidapps.model.dto.MovieDTO
+import es.usj.androidapps.model.dto.SongDTO
 
 object DataConverter {
 
-    fun actorToDTO(actor: Actor): ActorDTO {
-        return ActorDTO(
-            actor.id,
-            actor.name
+    fun singerToDTO(singer: Singer): SingerDTO {
+        return SingerDTO(
+            singer.id,
+            singer.name
         )
     }
 
-    fun actorFromDTO(actorDTO: ActorDTO): Actor {
-        return Actor(
-            actorDTO.id,
-            actorDTO.name,
+    fun singerFromDTO(singerDTO: SingerDTO): Singer {
+        return Singer(
+            singerDTO.id,
+            singerDTO.name,
             mutableListOf()
         )
     }
@@ -39,33 +39,29 @@ object DataConverter {
         )
     }
 
-    fun movieToDTO(movie: Movie): MovieDTO {
-        return MovieDTO(
-            movie.id,
-            movie.title,
-            movie.description,
-            movie.director,
-            movie.year,
-            movie.runtime,
-            movie.rating,
-            movie.votes,
-            movie.revenue,
-            movie.actors.map { it.id },
-            movie.genres.map { it.id }
+    fun songToDTO(song: Song): SongDTO {
+        return SongDTO(
+            song.id,
+            song.title,
+            song.album,
+            song.year,
+            song.runtime,
+            song.rating,
+            song.votes,
+            song.singers.map { it.id },
+            song.genres.map { it.id }
         )
     }
 
-    fun movieFromDTO(movieDTO: MovieDTO): Movie {
-        return Movie(
-            movieDTO.id,
-            movieDTO.title,
-            movieDTO.description,
-            movieDTO.director,
-            movieDTO.year,
-            movieDTO.runtime,
-            movieDTO.rating,
-            movieDTO.votes,
-            movieDTO.revenue,
+    fun songFromDTO(songDTO: SongDTO): Song {
+        return Song(
+            songDTO.id,
+            songDTO.title,
+            songDTO.album,
+            songDTO.year,
+            songDTO.runtime,
+            songDTO.rating,
+            songDTO.votes,
             mutableListOf(),
             mutableListOf()
         )

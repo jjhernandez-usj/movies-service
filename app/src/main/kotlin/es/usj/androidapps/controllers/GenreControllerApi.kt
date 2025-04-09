@@ -36,12 +36,12 @@ interface GenreControllerApi {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun createGenre(@RequestBody @Valid body: GenreDTO): ResponseEntity<GenreDTO>
+    fun create(@RequestBody @Valid body: GenreDTO): ResponseEntity<GenreDTO>
 
     @ApiOperation(
-        value = "Updates a new genre.",
+        value = "Updates a genre.",
         nickname = "updateGenre",
-        notes = "Updates a new genre.",
+        notes = "Updates a genre.",
         response = CountDTO::class
     )
     @ApiResponses(
@@ -59,12 +59,12 @@ interface GenreControllerApi {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun updateGenre(@RequestBody @Valid body: GenreDTO): ResponseEntity<CountDTO>
+    fun update(@RequestBody @Valid body: GenreDTO): ResponseEntity<CountDTO>
 
     @ApiOperation(
-        value = "Deletes a new genre.",
+        value = "Deletes a genre.",
         nickname = "deleteGenre",
-        notes = "Deletes a new genre.",
+        notes = "Deletes a genre.",
         response = GenreDTO::class
     )
     @ApiResponses(
@@ -82,7 +82,7 @@ interface GenreControllerApi {
         method = [RequestMethod.DELETE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun deleteGenre(@PathVariable id: Long): ResponseEntity<GenreDTO>
+    fun delete(@PathVariable id: Long): ResponseEntity<GenreDTO>
 
     @ApiOperation(
         value = "Get genre by id.",
@@ -105,13 +105,13 @@ interface GenreControllerApi {
         method = [RequestMethod.GET],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getGenreById(@PathVariable id: Long): ResponseEntity<GenreDTO>
+    fun getById(@PathVariable id: Long): ResponseEntity<GenreDTO>
 
 
     @ApiOperation(
         value = "Get genres.",
         nickname = "getGenres",
-        notes = "Create a new genre.",
+        notes = "Get all genres.",
         response = GenreDTO::class,
         responseContainer = "List"
     )
@@ -129,7 +129,7 @@ interface GenreControllerApi {
         method = [RequestMethod.GET],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getGenres(
+    fun getAll(
         @RequestParam("limit", required = false) limit: Int? = 1000,
         @RequestParam("offset", required = false) offset: Long? = 0
     ): ResponseEntity<List<GenreDTO>>

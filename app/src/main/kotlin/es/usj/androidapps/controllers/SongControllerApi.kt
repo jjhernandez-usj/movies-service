@@ -1,7 +1,7 @@
 package es.usj.androidapps.controllers
 
-import es.usj.androidapps.model.dto.ActorDTO
 import es.usj.androidapps.model.dto.CountDTO
+import es.usj.androidapps.model.dto.SongDTO
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
@@ -11,19 +11,19 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(value = "Actors", description = "Actors API", tags = ["Actors"])
-@RequestMapping("actors")
-interface ActorControllerApi {
+@Api(value = "Songs", description = "Songs API", tags = ["Songs"])
+@RequestMapping("songs")
+interface SongControllerApi {
 
     @ApiOperation(
-        value = "Create a new actor.",
-        nickname = "createActor",
-        notes = "Create a new actor.",
-        response = ActorDTO::class
+        value = "Create a new song.",
+        nickname = "createSong",
+        notes = "Create a new song.",
+        response = SongDTO::class
     )
     @ApiResponses(
         value = [
-            ApiResponse(code = 200, message = "OK.", response = ActorDTO::class),
+            ApiResponse(code = 200, message = "OK.", response = SongDTO::class),
             ApiResponse(code = 400, message = "Invalid Credentials.", response = Error::class),
             ApiResponse(code = 401, message = "Unauthorized.", response = Error::class),
             ApiResponse(code = 403, message = "Forbidden.", response = Error::class),
@@ -36,12 +36,12 @@ interface ActorControllerApi {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun createActor(@RequestBody @Valid actorDTO: ActorDTO): ResponseEntity<ActorDTO>
+    fun create(@RequestBody @Valid body: SongDTO): ResponseEntity<SongDTO>
 
     @ApiOperation(
-        value = "Updates a new actor.",
-        nickname = "updateActor",
-        notes = "Updates a new actor.",
+        value = "Updates a new song.",
+        nickname = "updateSong",
+        notes = "Updates a new song.",
         response = CountDTO::class
     )
     @ApiResponses(
@@ -59,17 +59,17 @@ interface ActorControllerApi {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun updateActor(@RequestBody @Valid actorDTO: ActorDTO): ResponseEntity<CountDTO>
+    fun update(@RequestBody @Valid body: SongDTO): ResponseEntity<CountDTO>
 
     @ApiOperation(
-        value = "Deletes a new actor.",
-        nickname = "deleteActor",
-        notes = "Deletes a new actor.",
-        response = ActorDTO::class
+        value = "Deletes a song.",
+        nickname = "deleteSong",
+        notes = "Deletes a song.",
+        response = SongDTO::class
     )
     @ApiResponses(
         value = [
-            ApiResponse(code = 200, message = "OK.", response = ActorDTO::class),
+            ApiResponse(code = 200, message = "OK.", response = SongDTO::class),
             ApiResponse(code = 400, message = "Invalid Credentials.", response = Error::class),
             ApiResponse(code = 401, message = "Unauthorized.", response = Error::class),
             ApiResponse(code = 403, message = "Forbidden.", response = Error::class),
@@ -82,17 +82,17 @@ interface ActorControllerApi {
         method = [RequestMethod.DELETE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun deleteActor(@PathVariable id: Long): ResponseEntity<ActorDTO>
+    fun delete(@PathVariable id: Long): ResponseEntity<SongDTO>
 
     @ApiOperation(
-        value = "Get actor by id.",
-        nickname = "getActorById",
-        notes = "Get actor by id.",
-        response = ActorDTO::class
+        value = "Get song by id.",
+        nickname = "getSongById",
+        notes = "Get song by id.",
+        response = SongDTO::class
     )
     @ApiResponses(
         value = [
-            ApiResponse(code = 200, message = "OK.", response = ActorDTO::class),
+            ApiResponse(code = 200, message = "OK.", response = SongDTO::class),
             ApiResponse(code = 400, message = "Invalid Credentials.", response = Error::class),
             ApiResponse(code = 401, message = "Unauthorized.", response = Error::class),
             ApiResponse(code = 403, message = "Forbidden.", response = Error::class),
@@ -105,19 +105,19 @@ interface ActorControllerApi {
         method = [RequestMethod.GET],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getActorById(@PathVariable id: Long): ResponseEntity<ActorDTO>
+    fun getById(@PathVariable id: Long): ResponseEntity<SongDTO>
 
 
     @ApiOperation(
-        value = "Get actors.",
-        nickname = "getActors",
-        notes = "Create a new actor.",
-        response = ActorDTO::class,
+        value = "Get songs.",
+        nickname = "getSongs",
+        notes = "Get all songs",
+        response = SongDTO::class,
         responseContainer = "List"
     )
     @ApiResponses(
         value = [
-            ApiResponse(code = 200, message = "OK.", response = ActorDTO::class, responseContainer = "List"),
+            ApiResponse(code = 200, message = "OK.", response = SongDTO::class, responseContainer = "List"),
             ApiResponse(code = 400, message = "Invalid Credentials.", response = Error::class),
             ApiResponse(code = 401, message = "Unauthorized.", response = Error::class),
             ApiResponse(code = 403, message = "Forbidden.", response = Error::class),
@@ -129,8 +129,8 @@ interface ActorControllerApi {
         method = [RequestMethod.GET],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getActors(
-        @RequestParam("limit", required = false) limit: Int? = 1000,
+    fun getAll(
+        @RequestParam("limit", required = false) limit: Int? = 1500,
         @RequestParam("offset", required = false) offset: Long? = 0
-    ): ResponseEntity<List<ActorDTO>>
+    ): ResponseEntity<List<SongDTO>>
 }

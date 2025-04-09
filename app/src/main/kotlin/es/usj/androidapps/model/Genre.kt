@@ -10,7 +10,7 @@ class Genre(
     @Column(unique = true)
     var name: String,
     @ManyToMany(mappedBy = "genres")
-    val movies: MutableList<Movie> = mutableListOf()
+    val songs: MutableList<Song> = mutableListOf()
 ) {
     constructor() : this(0, "")
 }
