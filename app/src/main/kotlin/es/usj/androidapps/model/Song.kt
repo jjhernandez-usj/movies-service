@@ -5,16 +5,14 @@ import org.hibernate.annotations.LazyCollectionOption
 import javax.persistence.*
 
 @Entity
-@Table(name = "movies")
-class Movie(
+@Table(name = "songs")
+class Song(
     @Id
     var id: Long,
-    @Column(length = 250)
-    var title: String,
     @Column(columnDefinition = "TEXT")
-    var description: String,
+    var title: String,
     @Column
-    var director: String,
+    var album: String,
     @Column(name = "release_year")
     var year: Int,
     @Column
@@ -23,42 +21,40 @@ class Movie(
     var rating: Double,
     @Column
     var votes: Long,
-    @Column
-    var revenue: Double,
     @ManyToMany(cascade = [CascadeType.DETACH])
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
-        name = "actors_to_movies",
-        joinColumns = [JoinColumn(name = "id_actor")],
-        inverseJoinColumns = [JoinColumn(name = "id_movie")]
+        name = "singers_to_songs",
+        joinColumns = [JoinColumn(name = "id_singer")],
+        inverseJoinColumns = [JoinColumn(name = "id_song")]
     )
-    var actors: MutableList<Actor> = mutableListOf(),
+    var singers: MutableList<Singer> = mutableListOf(),
     @ManyToMany(cascade = [CascadeType.DETACH])
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
-        name = "genres_to_movies",
+        name = "genres_to_songs",
         joinColumns = [JoinColumn(name = "id_genre")],
-        inverseJoinColumns = [JoinColumn(name = "id_movie")]
+        inverseJoinColumns = [JoinColumn(name = "id_song")]
     )
     var genres: MutableList<Genre> = mutableListOf()
 ) {
-    constructor() : this(0, "", "", "", 0, 0, 0.0, 0, 0.0)
+    constructor() : this(0, "", "", 0, 0, 0.0, 0)
 
     fun addAllGenres(genres: List<Genre>) {
         genres.forEach { addGenre(it) }
     }
 
     fun addGenre(genre: Genre) {
-        genre.movies.add(this)
+        genre.songs.add(this)
         this.genres.add(genre)
     }
 
-    fun addAllActors(actors: List<Actor>) {
-        actors.forEach { addActor(it) }
+    fun addAll(singers: List<Singer>) {
+        singers.forEach { add(it) }
     }
 
-    fun addActor(actor: Actor) {
-        actor.movies.add(this)
-        this.actors.add(actor)
+    fun add(singer: Singer) {
+        singer.songs.add(this)
+        this.singers.add(singer)
     }
 }

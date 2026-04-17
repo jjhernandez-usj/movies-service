@@ -1,54 +1,54 @@
 package es.usj.androidapps.controllers.impl
 
-import es.usj.androidapps.controllers.MovieControllerApi
+import es.usj.androidapps.controllers.SongControllerApi
 import es.usj.androidapps.model.dto.CountDTO
-import es.usj.androidapps.model.dto.MovieDTO
-import es.usj.androidapps.services.MovieServiceApi
+import es.usj.androidapps.model.dto.SongDTO
+import es.usj.androidapps.services.SongServiceApi
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 
 @Controller
-class MovieControllerApiImpl : MovieControllerApi {
+class SongControllerApiImpl : SongControllerApi {
     @Autowired
-    lateinit var movieService: MovieServiceApi
+    lateinit var service: SongServiceApi
 
-    override fun createMovie(body: MovieDTO): ResponseEntity<MovieDTO> {
+    override fun create(body: SongDTO): ResponseEntity<SongDTO> {
         return try {
-            ResponseEntity.ok().body(movieService.save(body))
+            ResponseEntity.ok().body(service.save(body))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
-    override fun updateMovie(body: MovieDTO): ResponseEntity<CountDTO> {
+    override fun update(body: SongDTO): ResponseEntity<CountDTO> {
         return try {
-            val count = movieService.edit(body)
+            val count = service.edit(body)
             ResponseEntity.ok().body(CountDTO(count))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
-    override fun deleteMovie(id: Long): ResponseEntity<MovieDTO> {
+    override fun delete(id: Long): ResponseEntity<SongDTO> {
         return try {
-            ResponseEntity.ok().body(movieService.delete(id))
+            ResponseEntity.ok().body(service.delete(id))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
-    override fun getMovieById(id: Long): ResponseEntity<MovieDTO> {
+    override fun getById(id: Long): ResponseEntity<SongDTO> {
         return try {
-            ResponseEntity.ok().body(movieService.find(id))
+            ResponseEntity.ok().body(service.find(id))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
-    override fun getMovies(limit: Int?, offset: Long?): ResponseEntity<List<MovieDTO>> {
+    override fun getAll(limit: Int?, offset: Long?): ResponseEntity<List<SongDTO>> {
         return try {
-            ResponseEntity.ok().body(movieService.list(limit, offset))
+            ResponseEntity.ok().body(service.list(limit, offset))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }

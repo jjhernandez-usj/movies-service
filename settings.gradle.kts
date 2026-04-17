@@ -1,2 +1,2 @@
-rootProject.name = "movies-service"
+rootProject.name = "songs-service"
 include("app")

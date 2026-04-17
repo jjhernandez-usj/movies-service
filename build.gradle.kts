@@ -56,7 +56,7 @@ allOpen {
 }
 
 application {
-    mainClass.set("es.usj.androidapps.MoviesServiceMsApplicationKt")
+    mainClass.set("es.usj.androidapps.SongsServiceMsApplicationKt")
 }
 
 

@@ -1,10 +1,10 @@
 package es.usj.androidapps.repositories
 
-import es.usj.androidapps.model.Movie
+import es.usj.androidapps.model.Song
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MovieRepository : JpaRepositoryImplementation<Movie, Long> {
-    fun findFirstByOrderByIdDesc() : Movie
+interface SongRepository : JpaRepositoryImplementation<Song, Long> {
+    fun findFirstByOrderByIdDesc() : Song
 }

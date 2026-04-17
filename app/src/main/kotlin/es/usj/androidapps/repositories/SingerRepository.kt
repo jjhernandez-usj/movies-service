@@ -1,10 +1,10 @@
 package es.usj.androidapps.repositories
 
-import es.usj.androidapps.model.Actor
+import es.usj.androidapps.model.Singer
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ActorRepository : JpaRepositoryImplementation<Actor, Long> {
-    fun findFirstByOrderByIdDesc() : Actor
+interface SingerRepository : JpaRepositoryImplementation<Singer, Long> {
+    fun findFirstByOrderByIdDesc() : Singer
 }

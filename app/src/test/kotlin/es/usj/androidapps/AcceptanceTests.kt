@@ -3,55 +3,55 @@ package es.usj.androidapps
 import com.fasterxml.jackson.module.kotlin.jsonMapper
 import es.usj.androidapps.infrastructure.BaseTest
 import es.usj.androidapps.infrastructure.TestProperties
-import es.usj.androidapps.model.dto.ActorDTO
+import es.usj.androidapps.model.dto.SingerDTO
 import es.usj.androidapps.model.dto.CountDTO
 import es.usj.androidapps.model.dto.GenreDTO
-import es.usj.androidapps.model.dto.MovieDTO
+import es.usj.androidapps.model.dto.SongDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 
-const val ACTOR_PATH = "/actors"
+const val SINGERS_PATH = "/singers"
 const val GENRE_PATH = "/genres"
-const val MOVIE_PATH = "/movies"
+const val SONGS_PATH = "/songs"
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class AcceptanceTests : BaseTest(TestProperties.local()) {
 
     @Test
-    fun `add actor without id returns actor with maximum id`() {
-        val items = ACTOR_PATH.GET<ActorDTO>(jsonMapper())
+    fun `add singer without id returns singer with maximum id`() {
+        val items = SINGERS_PATH.GET<SingerDTO>(jsonMapper())
         val size = items.count()
-        val item = ActorDTO(0, "Juanjo")
-        val returned = ACTOR_PATH.POST<ActorDTO>(item)
+        val item = SingerDTO(0, "Juanjo")
+        val returned = SINGERS_PATH.POST<SingerDTO>(item)
         assert(returned.id > size)
-        assert(ACTOR_PATH.GET<ActorDTO>(jsonMapper()).count() > size)
+        assert(SINGERS_PATH.GET<SingerDTO>(jsonMapper()).count() > size)
     }
 
     @Test
-    fun `edit actor returns actor properly`() {
-        val item = ActorDTO(0, "Juanjo${Math.random()}")
-        val created = ACTOR_PATH.POST<ActorDTO>(item)
+    fun `edit singer returns singer properly`() {
+        val item = SingerDTO(0, "Juanjo${Math.random()}")
+        val created = SINGERS_PATH.POST<SingerDTO>(item)
         created.name = "Juanjo${Math.random()}"
-        val size = ACTOR_PATH.PUT<CountDTO>(created)
+        val size = SINGERS_PATH.PUT<CountDTO>(created)
         assert(size.count == 1)
-        val edited = "$ACTOR_PATH/${created.id}".GET<ActorDTO>()
+        val edited = "$SINGERS_PATH/${created.id}".GET<SingerDTO>()
         assert(edited.id == created.id)
         assert(edited.name == created.name)
     }
 
     @Test
-    fun `delete an actor by id works`() {
-        val item = ActorDTO(0, "Juanjo${Math.random()}")
-        val created = ACTOR_PATH.POST<ActorDTO>(item)
-        val found = "$ACTOR_PATH/${created.id}".GET<ActorDTO>()
-        "$ACTOR_PATH/${found.id}".DELETE<ActorDTO>()
-        assertThrows<Exception> { "$ACTOR_PATH/${created.id}".GET<ActorDTO>() }
+    fun `delete an singer by id works`() {
+        val item = SingerDTO(0, "Juanjo${Math.random()}")
+        val created = SINGERS_PATH.POST<SingerDTO>(item)
+        val found = "$SINGERS_PATH/${created.id}".GET<SingerDTO>()
+        "$SINGERS_PATH/${found.id}".DELETE<SingerDTO>()
+        assertThrows<Exception> { "$SINGERS_PATH/${created.id}".GET<SingerDTO>() }
     }
 
     @Test
-    fun `list actors works`() {
-        val found = ACTOR_PATH.GET<ActorDTO>(jsonMapper())
+    fun `list singers works`() {
+        val found = SINGERS_PATH.GET<SingerDTO>(jsonMapper())
         assert(found.isNotEmpty())
     }
 
@@ -92,89 +92,87 @@ class AcceptanceTests : BaseTest(TestProperties.local()) {
         assert(found.isNotEmpty())
     }
 
-    fun createMovieDTO() : MovieDTO {
-        return MovieDTO(0L,
+    fun createSongDTO() : SongDTO {
+        return SongDTO(0L,
             "Title${Math.random()}",
-            "Description${Math.random()}",
-            "Description${Math.random()}",
+            "Album${Math.random()}",
             (Math.random()*2022).toInt(),
             (Math.random()*180).toInt(),
             Math.random(),
             (Math.random() * 10000000).toLong(),
-            Math.random(),
             listOf(1,2,3),
             listOf(4,2)
         )
     }
 
     @Test
-    fun `add movie without id returns movie with maximum id`() {
-        val items = MOVIE_PATH.GET<MovieDTO>(jsonMapper())
+    fun `add song without id returns song with maximum id`() {
+        val items = SONGS_PATH.GET<SongDTO>(jsonMapper())
         val size = items.count()
-        val item = createMovieDTO()
-        val returned = MOVIE_PATH.POST<MovieDTO>(item)
+        val item = createSongDTO()
+        val returned = SONGS_PATH.POST<SongDTO>(item)
         assert(returned.id > size)
-        assert(returned.actors.size == item.actors.size)
-        assert(returned.actors.sorted().toString() == item.actors.sorted().toString())
+        assert(returned.singers.size == item.singers.size)
+        assert(returned.singers.sorted().toString() == item.singers.sorted().toString())
         assert(returned.genres.size == item.genres.size)
         assert(returned.genres.sorted().toString() == item.genres.sorted().toString())
-        assert(MOVIE_PATH.GET<MovieDTO>(jsonMapper()).count() > size)
+        assert(SONGS_PATH.GET<SongDTO>(jsonMapper()).count() > size)
     }
 
     @Test
-    fun `add movie id returns movie with maximum id`() {
-        val items = MOVIE_PATH.GET<MovieDTO>(jsonMapper())
+    fun `add song id returns song with maximum id`() {
+        val items = SONGS_PATH.GET<SongDTO>(jsonMapper())
         val size = items.count()
-        val item = createMovieDTO()
-        val returned = MOVIE_PATH.POST<MovieDTO>(item)
+        val item = createSongDTO()
+        val returned = SONGS_PATH.POST<SongDTO>(item)
         assert(returned.id > size)
-        assert(returned.actors.size == item.actors.size)
-        assert(returned.actors.sorted().toString() == item.actors.sorted().toString())
+        assert(returned.singers.size == item.singers.size)
+        assert(returned.singers.sorted().toString() == item.singers.sorted().toString())
         assert(returned.genres.size == item.genres.size)
         assert(returned.genres.sorted().toString() == item.genres.sorted().toString())
-        assert(MOVIE_PATH.GET<MovieDTO>(jsonMapper()).count() > size)
+        assert(SONGS_PATH.GET<SongDTO>(jsonMapper()).count() > size)
     }
 
     @Test
-    fun `edit movie returns movie properly`() {
-        val item = createMovieDTO()
-        val created = MOVIE_PATH.POST<MovieDTO>(item)
+    fun `edit song returns song properly`() {
+        val item = createSongDTO()
+        val created = SONGS_PATH.POST<SongDTO>(item)
         created.title = "Matrix${Math.random()}"
-        val size = MOVIE_PATH.PUT<CountDTO>(created)
+        val size = SONGS_PATH.PUT<CountDTO>(created)
         assert(size.count == 1)
-        val edited = "$MOVIE_PATH/${created.id}".GET<MovieDTO>()
+        val edited = "$SONGS_PATH/${created.id}".GET<SongDTO>()
         assert(edited.id == created.id)
         assert(edited.title == created.title)
-        assert(edited.actors.size == item.actors.size)
-        assert(edited.actors.sorted().toString() == item.actors.sorted().toString())
+        assert(edited.singers.size == item.singers.size)
+        assert(edited.singers.sorted().toString() == item.singers.sorted().toString())
         assert(edited.genres.size == item.genres.size)
         assert(edited.genres.sorted().toString() == item.genres.sorted().toString())
     }
 
     @Test
-    fun `edit movie title returns movie properly`() {
-        val edited = "$MOVIE_PATH/1".GET<MovieDTO>()
+    fun `edit song title returns song properly`() {
+        val edited = "$SONGS_PATH/1".GET<SongDTO>()
         edited.title = "New guardians"
-        val size = MOVIE_PATH.PUT<CountDTO>(edited)
+        val size = SONGS_PATH.PUT<CountDTO>(edited)
         assert(size.count == 1)
-        val created = "$MOVIE_PATH/1".GET<MovieDTO>()
+        val created = "$SONGS_PATH/1".GET<SongDTO>()
         assert(edited.id == created.id)
         assert(edited.title == created.title)
     }
 
 
     @Test
-    fun `delete a movie by id works`() {
-        val item = createMovieDTO()
-        val created = MOVIE_PATH.POST<MovieDTO>(item)
-        val found = "$MOVIE_PATH/${created.id}".GET<MovieDTO>()
-        "$MOVIE_PATH/${found.id}".DELETE<MovieDTO>()
-        assertThrows<Exception> { "$MOVIE_PATH/${created.id}".GET<MovieDTO>() }
+    fun `delete a song by id works`() {
+        val item = createSongDTO()
+        val created = SONGS_PATH.POST<SongDTO>(item)
+        val found = "$SONGS_PATH/${created.id}".GET<SongDTO>()
+        "$SONGS_PATH/${found.id}".DELETE<SongDTO>()
+        assertThrows<Exception> { "$SONGS_PATH/${created.id}".GET<SongDTO>() }
     }
 
     @Test
-    fun `list movie works`() {
-        val found = MOVIE_PATH.GET<MovieDTO>(jsonMapper())
+    fun `list song works`() {
+        val found = SONGS_PATH.GET<SongDTO>(jsonMapper())
         assert(found.isNotEmpty())
     }
 }
